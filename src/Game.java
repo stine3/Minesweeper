@@ -16,9 +16,18 @@ public class Game extends Display {
 
 		for (int y = 0; y < Y; y++) {
 			for (int x = 0; x < X; x++) {
-				System.out.print(matchfield[x][y]);
+				System.out.print(display.get(x, y));
 			}
 			System.out.println();
+		}
+
+	}
+
+	public void search(int x, int y) {
+		if (mineField.isMine(x, y)) {
+			display.set(x, y, MINE);
+		} else {
+			display.set(x, y, (char) countMines(x, y));
 		}
 	}
 

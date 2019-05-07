@@ -7,7 +7,7 @@ public class Display {
 	public static final int frameX = X * sideLength;
 	public static final int frameY = Y * sideLength;
 
-	protected char[][] matchfield = new char[X][Y];
+	private char[][] matchfield = new char[X][Y];
 
 	public static final char EMPTY = ' ';
 	public static final char MINE = '#';
@@ -53,6 +53,10 @@ public class Display {
 		char ergebnis = matchfield[x][y];
 		return ergebnis;
 	}
+	
+	public void set(int x, int y, char z) {
+		matchfield[x][y] = z;
+		}
 
 	// marks field with a ! but only possible if it's empty
 	public void markField(int x, int y) {
@@ -85,7 +89,7 @@ public class Display {
 
 		for (int i = xMin; i <= xMax; i++) {
 			for (int j = yMin; j <= yMax; j++) {
-				// Verhindert, dass das "eigene" Feld mitgezählt wird
+				// prevents that you count the x,y field:
 				if (x != i || y != j) {
 					if (mineField.isMine(i, j))
 						numberMines++;
@@ -101,11 +105,11 @@ public class Display {
 
 	// fills in mines or numbers depending on coordinate
 	// if field is marked, do not fill in again
-	public void search(int x, int y) {
-		if (mineField.isMine(x, y)) {
-			matchfield[x][y] = MINE;
-		} else {
-			matchfield[x][y] = (char) countMines(x, y);
-		}
-	}
+//	public void search(int x, int y) {
+//		if (mineField.isMine(x, y)) {
+//			matchfield[x][y] = MINE;
+//		} else {
+//			matchfield[x][y] = (char) countMines(x, y);
+//		}
+//	}
 }

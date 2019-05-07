@@ -10,6 +10,7 @@ public class MinePanel extends JPanel implements MouseListener {
 	Game aGame = new Game();
 
 	public MinePanel(Game game) {
+
 		aGame = game;
 		this.addMouseListener(this);
 		aGame.getCoordinates();
@@ -17,7 +18,7 @@ public class MinePanel extends JPanel implements MouseListener {
 
 	private int mX;
 	private int mY;
-	// 0 = game is running, 1 = can't lose when marking mines
+	// 0 = game is running, 1 = can't lose when marking mines, 2 = game has ended
 	private int state = 0;
 
 	@Override
@@ -25,10 +26,12 @@ public class MinePanel extends JPanel implements MouseListener {
 		mX = pos(e.getX());
 		mY = pos(e.getY());
 
+		aGame.showMatchfield();
+		
 		aGame.countTiles();
 		aGame.countMarked();
-		//System.out.println(aGame.countTiles());
-		//System.out.println(aGame.countMarked());
+		// System.out.println(aGame.countTiles());
+		// System.out.println(aGame.countMarked());
 
 		if (e.getButton() == MouseEvent.BUTTON3) {
 			aGame.markField(mX, mY);
@@ -47,16 +50,16 @@ public class MinePanel extends JPanel implements MouseListener {
 		super.paint(gr);
 
 		// horizontal lines
-		for (int i = 0; i <= this.getHeight() / Display.sideLength; i++) {
-			int x = (this.getHeight() / Display.Y) * i;
-			gr.drawLine(0, x, this.getWidth(), x);
+		for (int i = 0; i <= Display.frameY / Display.sideLength; i++) {
+			int x = (Display.frameY / Display.Y) * i;
+			gr.drawLine(0, x, Display.frameX, x);
 
 		}
 
 		// vertical lines
-		for (int i = 0; i <= this.getWidth() / Display.sideLength; i++) {
-			int y = (this.getWidth() / Display.X) * i;
-			gr.drawLine(y, 0, y, this.getHeight());
+		for (int i = 0; i <= Display.frameX / Display.sideLength; i++) {
+			int y = (Display.frameX / Display.X) * i;
+			gr.drawLine(y, 0, y, Display.frameY);
 		}
 
 		// fills in the numbers and mines and marks
@@ -68,27 +71,28 @@ public class MinePanel extends JPanel implements MouseListener {
 		}
 
 		// fills in all mines when you click one, you lose
-		if (state != 1) {
+		if (state == 0) {
 			if (aGame.mineField.isMine(mX, mY)) {
 				for (int i = 0; i < aGame.mineField.MINES; i++) {
 					gr.drawString(Character.toString(aGame.MINE),
 							aGame.mineField.get(i).getX() * Display.sideLength + 20,
 							aGame.mineField.get(i).getY() * Display.sideLength + 25);
 					setBackground(Color.RED);
-					// if you lose, the MouseListener gets removed so you can't keep playing
-					this.removeMouseListener(this);
+					state = 2;
 				}
 			}
 		}
 
 		// checks if the number of tiles you clicked equals the number of total tiles
 		// minus the number of mines plus the number of marked to match
-//		if (aGame.countMarked() != 0) {
+		if (Display.X * Display.Y - aGame.mineField.MINES + aGame.countMarked() == aGame.countTiles()) {
+			setBackground(Color.GREEN);
+			state = 2;
+		}
 
-			if (Display.X * Display.Y - aGame.mineField.MINES + aGame.countMarked() == aGame.countTiles()) {
-				setBackground(Color.GREEN);
-				this.removeMouseListener(this);
-			}
+		if (state == 2) {
+			this.removeMouseListener(this);
+		}
 
 	}
 

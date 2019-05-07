@@ -13,7 +13,7 @@ public class Mines {
 			int y = random.nextInt(Display.Y);
 			mineAr[i] = new Mine(x, y);
 			for (int j = 0; j < i; j++) {
-				if (x == mineAr[j].getX() && y == mineAr[j].getY()) {
+				if (mineAr[i].equals(mineAr[j])) {
 					i--;
 				}
 			}
