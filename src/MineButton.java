@@ -1,17 +1,16 @@
 
-import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 
 import javax.swing.JButton;
+import javax.swing.JPanel;
 
-public class MineButton extends MinePanel {
+public class MineButton extends JPanel {
 
-	public MineButton(Game game) {
+	public MineButton() {
 
-		super(game);
-
-		setLayout(new BorderLayout());
-		this.add(BorderLayout.SOUTH, new JButton("New Game"));
-		this.setSize(100, 500);
+		// doesn't work yet
+		setLayout(new FlowLayout());
+		this.add(new JButton("New Game"));
 
 	}
 

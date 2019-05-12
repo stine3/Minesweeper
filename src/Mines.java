@@ -2,7 +2,7 @@
 public class Mines {
 
 	java.util.Random random = new java.util.Random();
-	public static final int MINES = 2;
+	public static final int MINES = 4;
 	public Mine[] mineAr = new Mine[MINES];
 
 	// creates an array of mines with random coordinates

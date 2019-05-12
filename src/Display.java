@@ -1,13 +1,13 @@
 
 public class Display {
 
-	public static final int X = 5;
-	public static final int Y = 5;
+	public static final int X = 6;
+	public static final int Y = 6;
 	public static int sideLength = 50;
 	public static final int frameX = X * sideLength;
 	public static final int frameY = Y * sideLength;
 
-	private char[][] matchfield = new char[X][Y];
+	private static char[][] matchfield = new char[X][Y];
 
 	public static final char EMPTY = ' ';
 	public static final char MINE = '#';
@@ -53,10 +53,10 @@ public class Display {
 		char ergebnis = matchfield[x][y];
 		return ergebnis;
 	}
-	
+
 	public void set(int x, int y, char z) {
 		matchfield[x][y] = z;
-		}
+	}
 
 	// marks field with a ! but only possible if it's empty
 	public void markField(int x, int y) {

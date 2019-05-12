@@ -19,7 +19,7 @@ public class MinePanel extends JPanel implements MouseListener {
 	private int mX;
 	private int mY;
 	// 0 = game is running, 1 = can't lose when marking mines, 2 = game has ended
-	private int state = 0;
+	private int state = 1;
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
