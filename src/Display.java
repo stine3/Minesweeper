@@ -102,6 +102,11 @@ public class Display {
 		}
 		return (char) numberMines;
 	}
+	
+	
+
+	
+
 
 	// fills in mines or numbers depending on coordinate
 	// if field is marked, do not fill in again

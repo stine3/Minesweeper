@@ -31,4 +31,18 @@ public class Game extends Display {
 		}
 	}
 
+	public void revealZeros(int x, int y) {
+
+		if (countMines(x, y) == '0' && display.get(x, y) == EMPTY) {
+			search(x, y);
+			revealZeros(x + 1, y);
+			revealZeros(x - 1, y);
+			revealZeros(x, y - 1);
+			revealZeros(x, y + 1);
+
+		} else {
+			return;
+		}
+	}
+
 }

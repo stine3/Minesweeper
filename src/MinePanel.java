@@ -30,6 +30,7 @@ public class MinePanel extends JPanel implements MouseListener {
 		
 		aGame.countTiles();
 		aGame.countMarked();
+		aGame.revealZeros(mX, mY);
 		// System.out.println(aGame.countTiles());
 		// System.out.println(aGame.countMarked());
 
