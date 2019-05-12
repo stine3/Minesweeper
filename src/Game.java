@@ -28,6 +28,9 @@ public class Game extends Display {
 			display.set(x, y, MINE);
 		} else {
 			display.set(x, y, (char) countMines(x, y));
+
+			setNeighbors(x, y);
+
 		}
 	}
 
@@ -39,10 +42,37 @@ public class Game extends Display {
 			revealZeros(x - 1, y);
 			revealZeros(x, y - 1);
 			revealZeros(x, y + 1);
-
 		} else {
 			return;
 		}
 	}
 
+	public void setNeighbors(int x, int y) {
+
+		if (display.get(x, y) == EMPTY_CLICKED) {
+			// prevents that it checks for mines outside of the matchfield array
+			// if x, y are at a border, the variables will still stay inside the array
+			int xMin = x - 1;
+			if (xMin < 0)
+				xMin = 0;
+
+			int xMax = x + 1;
+			if (xMax > X)
+				xMax = X;
+
+			int yMin = y - 1;
+			if (yMin < 0)
+				yMin = 0;
+
+			int yMax = y + 1;
+			if (yMax > Y)
+				yMax = Y;
+
+			for (int i = xMin; i <= xMax; i++) {
+				for (int j = yMin; j <= yMax; j++) {
+					display.set(i, j, countMines(i, j));
+				}
+			}
+		}
+	}
 }
