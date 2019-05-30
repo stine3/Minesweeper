@@ -1,13 +1,14 @@
+import java.awt.Graphics;
 
 public class Display {
 
-	public static final int X = 6;
-	public static final int Y = 6;
+	public static final int X = 4;
+	public static final int Y = 4;
 	public static int sideLength = 50;
 	public static final int frameX = X * sideLength;
 	public static final int frameY = Y * sideLength;
 
-	private static char[][] matchfield = new char[X][Y];
+	private char[][] matchfield = new char[X][Y];
 
 	public static final char EMPTY = ' ';
 	public static final char MINE = '#';
@@ -49,9 +50,7 @@ public class Display {
 	}
 
 	public char get(int x, int y) {
-
-		char ergebnis = matchfield[x][y];
-		return ergebnis;
+		return matchfield[x][y];
 	}
 
 	public void set(int x, int y, char z) {
@@ -65,56 +64,52 @@ public class Display {
 		}
 	}
 
-	public char countMines(int x, int y) {
 
-		char numberMines = '0';
 
-		// prevents that it checks for mines outside of the matchfield array
-		// if x, y are at a border, the variables will still stay inside the array
-		int xMin = x - 1;
-		if (xMin < 0)
-			xMin = 0;
+	public void paintGrid(Graphics gr) {
+		// horizontal lines
+		for (int i = 0; i <= Display.frameY / Display.sideLength; i++) {
+			int x = (Display.frameY / Display.Y) * i;
+			gr.drawLine(0, x, Display.frameX, x);
 
-		int xMax = x + 1;
-		if (xMax > X)
-			xMax = X;
+		}
 
-		int yMin = y - 1;
-		if (yMin < 0)
-			yMin = 0;
+		// vertical lines
+		for (int i = 0; i <= Display.frameX / Display.sideLength; i++) {
+			int y = (Display.frameX / Display.X) * i;
+			gr.drawLine(y, 0, y, Display.frameY);
+		}
+	}
 
-		int yMax = y + 1;
-		if (yMax > Y)
-			yMax = Y;
-
-		for (int i = xMin; i <= xMax; i++) {
-			for (int j = yMin; j <= yMax; j++) {
-				// prevents that you count the x,y field:
-				if (x != i || y != j) {
-					if (mineField.isMine(i, j))
-						numberMines++;
-				}
+	// fills in the numbers and mines and marks
+	public void paintElements(Graphics gr, Game game) {
+		for (int x = 0; x < Display.X; x++) {
+			for (int y = 0; y < Display.Y; y++) {
+				gr.drawString(Character.toString(game.get(x, y)), x * Display.sideLength + 20,
+						y * Display.sideLength + 25);
 			}
 		}
-		// if there are no mines nearby, it should stay empty
-		if (numberMines == '0') {
-			return EMPTY_CLICKED;
-		}
-		return (char) numberMines;
 	}
-	
-	
 
-	
+	// checks if the number of tiles you clicked equals the number of total tiles
+	// minus the number of mines plus the number of marked to match
+	public boolean isWon(Game game) {
+		return Display.X * Display.Y - Mines.MINES + game.countMarked() == game.countTiles();
+	}
 
+	public boolean isLose(Game game, int x, int y) {
+		return game.mineField.isMine(x, y);
+	}
 
-	// fills in mines or numbers depending on coordinate
-	// if field is marked, do not fill in again
-//	public void search(int x, int y) {
-//		if (mineField.isMine(x, y)) {
-//			matchfield[x][y] = MINE;
-//		} else {
-//			matchfield[x][y] = (char) countMines(x, y);
-//		}
-//	}
+	// shows all mines when you lose
+	public void paintMines(Graphics gr, Game game) {
+
+		for (int i = 0; i < Mines.MINES; i++) {
+			gr.drawString(Character.toString(Display.MINE), game.mineField.get(i).getX() * Display.sideLength + 20,
+					game.mineField.get(i).getY() * Display.sideLength + 25);
+
+		}
+
+	}
+
 }

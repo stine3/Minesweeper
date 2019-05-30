@@ -1,9 +1,9 @@
 
 public class Mines {
 
-	java.util.Random random = new java.util.Random();
-	public static final int MINES = 2;
-	public Mine[] mineAr = new Mine[MINES];
+	private java.util.Random random = new java.util.Random();
+	public static final int MINES = 4;
+	private Mine[] mineAr = new Mine[MINES];
 
 	// creates an array of mines with random coordinates
 	// 15-17 prevents multiple mines on the same coordinate
@@ -15,7 +15,7 @@ public class Mines {
 			for (int j = 0; j < i; j++) {
 				if (mineAr[i].equals(mineAr[j])) {
 					i--;
-				}
+				} 
 			}
 		}
 	}
