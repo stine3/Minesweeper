@@ -7,14 +7,16 @@ import javax.swing.JPanel;
 public class MinePanel extends JPanel implements MouseListener {
 
 	private static final long serialVersionUID = 1L;
+	
 	private Game aGame = new Game();
 
+	
 	private int mX;
 	private int mY;
 	// 0 = game is running, 1 = can't lose when marking mines, 2 = game has ended
 	// state = 1 because there is a bug where you lose when theres a mine at 0,0
 	// when the game starts
-	private int state = 1;
+	public int state = 1;
 	
 	public MinePanel(Game game) {
 
@@ -64,6 +66,7 @@ public class MinePanel extends JPanel implements MouseListener {
 		} else if (aGame.isWon(aGame)) {
 			setBackground(Color.GREEN);
 			state = 2;
+			Highscore.getInstance().store();
 		}
 
 		if (state == 2) {

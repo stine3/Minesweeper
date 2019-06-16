@@ -16,6 +16,7 @@ public class MineMenu extends JMenuBar implements ActionListener {
 	private JMenuItem save;
 	private JMenuItem name;
 	private JMenuItem quit;
+	private JMenuItem score;
 
 	private JMenuItem help;
 	private JMenuItem about;
@@ -30,7 +31,10 @@ public class MineMenu extends JMenuBar implements ActionListener {
 		this.save = new JMenuItem("Save As...");
 		this.name = new JMenuItem("Name...");
 		this.quit = new JMenuItem("Quit");
+		this.score = new JMenuItem("Highscore");
 
+		main.add(score);
+		this.score.addActionListener(this);
 		main.add(open);
 		this.open.addActionListener(this);
 		main.add(save);
@@ -54,21 +58,27 @@ public class MineMenu extends JMenuBar implements ActionListener {
 		if (ev.getSource() == save) {
 			JFileChooser files = new JFileChooser();
 			if (files.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-				File file = files.getSelectedFile();
+
+				Highscore.getInstance().add(new Score(input, MineTimer.getInstance().getSec()));
+				Highscore.getInstance().store();
 			}
 		}
 
 		if (ev.getSource() == name) {
 			String setName = JOptionPane.showInputDialog(null, "Name");
 			input = setName;
+			// new Score(setName);
 		}
 		if (ev.getSource() == quit) {
 			int answer = JOptionPane.showOptionDialog(null, "Are you sure?", "Quit Minesweeper",
 					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-			if(answer == 0) {
+			if (answer == 0) {
 				System.exit(0);
 			}
-			
+
+		}
+		if (ev.getSource() == score) {
+			HighDialog scoreboard = new HighDialog();
 		}
 
 	}

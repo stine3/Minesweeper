@@ -2,8 +2,8 @@ import java.awt.Graphics;
 
 public class Display {
 
-	public static final int X = 4;
-	public static final int Y = 4;
+	public static final int X = 6;
+	public static final int Y = 6;
 	public static int sideLength = 50;
 	public static final int frameX = X * sideLength;
 	public static final int frameY = Y * sideLength;

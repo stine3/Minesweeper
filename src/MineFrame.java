@@ -9,10 +9,13 @@ public class MineFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	
+
 	
 	
 	public MineFrame(Game game) {
-
+		
+		
+		Highscore.getInstance().load();
 		MinePanel panel = new MinePanel(game);
 		setLayout(new BorderLayout());
 		setJMenuBar(new MineMenu());

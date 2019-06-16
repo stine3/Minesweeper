@@ -8,10 +8,9 @@ public class MineTimer extends JLabel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 
-	Timer timer = new Timer(100, this);
+	Timer timer = new Timer(1000, this);
 	private static MineTimer instance = null;
-	private double sec;
-	private int min;
+	private int sec;
 
 	private MineTimer() {
 		setSec(0);
@@ -28,7 +27,6 @@ public class MineTimer extends JLabel implements ActionListener {
 
 	public void restart() {
 		setSec(0);
-		setMin(0);
 		timer.restart();
 	}
 
@@ -39,30 +37,19 @@ public class MineTimer extends JLabel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent ev) {
 
-		setSec(getSec() + 0.1);
+		setSec(getSec() + 1);
 
-		if (getSec() > 60) {
-			setSec(0);
-			setMin(getMin() + 1);
-		}
-		instance.setText("Time: " + getMin() + ":" + (int)getSec());
+		instance.setText("Time: " +  (int)getSec());
 		repaint();
 
 	}
 
-	public double getSec() {
+	public int getSec() {
 		return sec;
 	}
 
-	public void setSec(double sec) {
+	public void setSec(int sec) {
 		this.sec = sec;
 	}
 
-	public int getMin() {
-		return min;
-	}
-
-	public void setMin(int min) {
-		this.min = min;
-	}
 }
